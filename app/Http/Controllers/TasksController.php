@@ -15,6 +15,7 @@ class TasksController extends Controller
      */
     public function index()
     {
+       // dd('indexが呼ばれた');
         $tasks = Task::all();
         
         return view('tasks.index', [
@@ -29,6 +30,7 @@ class TasksController extends Controller
      */
     public function create()
     {
+       // dd('createが呼ばれた');
         $task = new Task;
 
         return view('tasks.create', [
@@ -44,7 +46,8 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        $task = new task;
+        $task = new Task;
+        $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
 
@@ -91,6 +94,7 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         $task = Task::findOrFail($id);
+        $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
 
