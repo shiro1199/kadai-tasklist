@@ -15,7 +15,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-       // dd('indexが呼ばれた');
+       //dd('indexが呼ばれた');
         $tasks = Task::all();
         
         return view('tasks.index', [
@@ -51,12 +51,19 @@ class TasksController extends Controller
             'content' => 'required|max:255',
         ]);
         
+        $request->user()->tasks()->create([
+            'status' => $request->status,
+            'content' => $request->content,
+        ]);
+        
+        /**
         $task = new Task;
         $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
+        */
 
-        return redirect('/');
+        return redirect('/tasks');
     }
 
     /**
@@ -108,7 +115,7 @@ class TasksController extends Controller
         $task->content = $request->content;
         $task->save();
 
-        return redirect('/');
+        return redirect('/tasks');
     }
 
     /**
@@ -122,6 +129,6 @@ class TasksController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return redirect('/');
+        return redirect('/tasks');
     }
 }
