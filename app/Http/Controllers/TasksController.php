@@ -15,12 +15,20 @@ class TasksController extends Controller
      */
     public function index()
     {
-       //dd('indexが呼ばれた');
-        $tasks = Task::all();
+        $tasks = Task::where('user_id', \Auth::user()->id)->get();
+ 
+        return view('tasks.index', [
+                'tasks' => $tasks,
+        ]);
+        
+        /**
+            //dd('indexが呼ばれた');
+            $tasks = Task::all();
         
         return view('tasks.index', [
-            'tasks' => $tasks,
-        ]);
+                'tasks' => $tasks,
+            ]);
+            */
     }
 
     /**
@@ -126,8 +134,16 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
+        $task = \App\Models\Task::findOrFail($id);
+        
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+        }
+        
+        /**
         $task = Task::findOrFail($id);
         $task->delete();
+        */
 
         return redirect('/tasks');
     }

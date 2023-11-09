@@ -1,7 +1,7 @@
 <header class="mb-4">
     <nav class="navbar bg-neutral text-neutral-content">
         <div class="flex-1">
-            <h1><a class="btn btn-ghost normal-case text-xl" href="/">TaskList</a></h1>
+            <h1><a class="btn btn-ghost normal-case text-xl" href="/tasks">TaskList</a></h1>
         </div>
 
         <div class="flex-none">
