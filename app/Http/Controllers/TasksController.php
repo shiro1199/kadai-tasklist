@@ -83,6 +83,10 @@ class TasksController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id);
+        
+         if (auth()->user()->id != $task->user_id) {
+            return redirect(route('tasks.index'));
+        }
 
         return view('tasks.show', [
             'task' => $task,
@@ -98,6 +102,10 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
+        
+        if (auth()->user()->id != $task->user_id) {
+            return redirect(route('tasks.index'));
+        }
 
         return view('tasks.edit', [
             'task' => $task,
@@ -119,9 +127,29 @@ class TasksController extends Controller
         ]);
         
         $task = Task::findOrFail($id);
+        if (auth()->user()->id != $task->user_id) {
+            return redirect(route('tasks.index'));
+        }
+        
+        /**
+        $tasks = Task::where('user_id', \Auth::user()->id)->get();
+        
+        //$task = \App\Models\Task::findOrFail($id);
+        //$task->update($request->findOrFail());
+        
+    
+        $request->user()->tasks()->update([
+            'status' => $request->status,
+            'content' => $request->content,
+        ]);
+        */
+        
+        
+        //$task = Task::findOrFail($id);
         $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
+    
 
         return redirect('/tasks');
     }
